@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Шёпот Ниже</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,6 +38,10 @@
       margin: 0;
       min-height: 100%;
       overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: none;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
       background:
         radial-gradient(circle at top, rgba(26, 44, 41, 0.22), transparent 42%),
         linear-gradient(180deg, #03060a 0%, #020406 100%);
@@ -421,6 +425,327 @@
       margin-top: 24px;
     }
 
+    .touch-only {
+      display: none;
+    }
+
+    .desktop-only {
+      display: block;
+    }
+
+    #mobileControls {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: none;
+      pointer-events: none;
+    }
+
+    body.touch-mode #mobileControls {
+      display: block;
+    }
+
+    body.touch-mode .touch-only {
+      display: block;
+    }
+
+    body.touch-mode .desktop-only {
+      display: none;
+    }
+
+    body.touch-mode .hud {
+      padding:
+        max(12px, env(safe-area-inset-top))
+        max(12px, env(safe-area-inset-right))
+        max(164px, calc(env(safe-area-inset-bottom) + 148px))
+        max(12px, env(safe-area-inset-left));
+      gap: 10px;
+    }
+
+    body.touch-mode .reticle {
+      opacity: 0.55;
+    }
+
+    body.touch-mode .stack {
+      gap: 8px;
+      max-width: calc(100vw - 24px);
+    }
+
+    body.touch-mode .chip {
+      min-width: 0;
+      max-width: min(46vw, 220px);
+      padding: 10px 12px;
+      border-radius: 16px;
+    }
+
+    body.touch-mode .status {
+      width: min(172px, 46vw);
+      padding: 10px 12px 12px;
+    }
+
+    body.touch-mode .label {
+      margin-bottom: 4px;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+    }
+
+    body.touch-mode .value {
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    body.touch-mode .meter {
+      height: 8px;
+      margin-top: 8px;
+    }
+
+    body.touch-mode .prompt {
+      max-width: calc(100vw - 28px);
+      padding: 8px 12px;
+      font-size: 11px;
+    }
+
+    body.touch-mode .whisper {
+      bottom: max(92px, calc(env(safe-area-inset-bottom) + 76px));
+      width: calc(100% - 28px);
+      font-size: clamp(16px, 4.8vw, 22px);
+      letter-spacing: 0.1em;
+    }
+
+    body.touch-mode .panel {
+      width: min(100%, 440px);
+      padding: 18px 16px 20px;
+      border-radius: 22px;
+    }
+
+    body.touch-mode .eyebrow {
+      margin-bottom: 8px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+    }
+
+    body.touch-mode h1 {
+      font-size: clamp(34px, 14vw, 52px);
+      line-height: 0.92;
+    }
+
+    body.touch-mode h2 {
+      font-size: clamp(26px, 10vw, 38px);
+      margin-bottom: 10px;
+    }
+
+    body.touch-mode .lead,
+    body.touch-mode .detail {
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    body.touch-mode .controls {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 16px 0 18px;
+    }
+
+    body.touch-mode .card {
+      padding: 10px 12px;
+      border-radius: 14px;
+    }
+
+    body.touch-mode .card strong,
+    body.touch-mode .menu-row strong {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+
+    body.touch-mode .card span,
+    body.touch-mode .menu-row span,
+    body.touch-mode .footer-note {
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    body.touch-mode .button-row {
+      margin-top: 18px;
+    }
+
+    body.touch-mode .menu-row {
+      margin-top: 16px;
+      padding: 12px 14px;
+    }
+
+    body.touch-mode .slider-wrap {
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mobile-look-zone {
+      position: absolute;
+      inset: 0 0 0 42%;
+      pointer-events: auto;
+      touch-action: none;
+    }
+
+    .mobile-look-hint {
+      position: absolute;
+      right: max(18px, env(safe-area-inset-right));
+      top: max(20px, env(safe-area-inset-top));
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(6, 10, 14, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(229, 238, 233, 0.84);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+    }
+
+    body.touch-mode .mobile-look-zone {
+      inset: 0 0 0 38%;
+    }
+
+    body.touch-mode .mobile-look-hint {
+      right: max(12px, env(safe-area-inset-right));
+      top: max(12px, env(safe-area-inset-top));
+      padding: 6px 10px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    .mobile-joystick {
+      position: absolute;
+      left: max(16px, env(safe-area-inset-left));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      pointer-events: auto;
+      touch-action: none;
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.14) 58%, rgba(0, 0, 0, 0.04) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(10px);
+    }
+
+    body.touch-mode .mobile-joystick {
+      left: max(12px, env(safe-area-inset-left));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      width: 120px;
+      height: 120px;
+    }
+
+    .mobile-joystick-ring {
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: inset 0 0 0 1px rgba(141, 240, 201, 0.05);
+    }
+
+    body.touch-mode .mobile-joystick-ring {
+      inset: 10px;
+    }
+
+    .mobile-joystick-thumb {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 56px;
+      height: 56px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.24), rgba(141, 240, 201, 0.22) 48%, rgba(11, 18, 23, 0.94) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 12px 24px -16px rgba(0, 0, 0, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    body.touch-mode .mobile-joystick-thumb {
+      width: 48px;
+      height: 48px;
+    }
+
+    .mobile-buttons {
+      position: absolute;
+      right: max(16px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: repeat(2, 66px);
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    body.touch-mode .mobile-buttons {
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      grid-template-columns: repeat(2, 58px);
+      gap: 10px;
+    }
+
+    .touch-button {
+      width: 66px;
+      height: 66px;
+      border-radius: 22px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: auto;
+      color: #e9f2ee;
+      background:
+        linear-gradient(180deg, rgba(14, 21, 25, 0.95), rgba(5, 9, 12, 0.88));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 18px 30px -24px rgba(0, 0, 0, 0.95),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    body.touch-mode .touch-button {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .touch-button:hover {
+      transform: none;
+      filter: none;
+      box-shadow:
+        0 18px 30px -24px rgba(0, 0, 0, 0.95),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .touch-button:active,
+    .touch-button.active {
+      background:
+        linear-gradient(180deg, rgba(21, 43, 39, 0.98), rgba(9, 18, 16, 0.92));
+      border-color: rgba(141, 240, 201, 0.26);
+      box-shadow:
+        0 18px 30px -22px rgba(141, 240, 201, 0.28),
+        inset 0 0 0 1px rgba(141, 240, 201, 0.08);
+    }
+
+    .touch-button.wide {
+      grid-column: 1 / -1;
+      width: 100%;
+      height: 54px;
+      border-radius: 18px;
+    }
+
+    body.touch-mode .touch-button.wide {
+      height: 48px;
+      border-radius: 16px;
+    }
+
     @media (max-width: 720px) {
       .hud {
         padding: 14px;
@@ -435,6 +760,47 @@
       .whisper {
         bottom: 104px;
         width: calc(100% - 32px);
+      }
+
+      .mobile-joystick {
+        width: 126px;
+        height: 126px;
+      }
+
+      .mobile-joystick-thumb {
+        width: 52px;
+        height: 52px;
+      }
+
+      .mobile-buttons {
+        grid-template-columns: repeat(2, 60px);
+      }
+
+      .touch-button {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 520px), (max-height: 760px) {
+      body.touch-mode .controls {
+        display: none;
+      }
+
+      body.touch-mode .footer-note:not(.touch-only) {
+        display: none;
+      }
+
+      body.touch-mode .touch-only.footer-note {
+        margin-top: 10px;
+      }
+
+      body.touch-mode .status {
+        width: min(148px, 44vw);
+      }
+
+      body.touch-mode .mobile-look-hint {
+        display: none;
       }
     }
   </style>
@@ -481,20 +847,21 @@
       <div class="controls">
         <div class="card">
           <strong>Движение</strong>
-          <span>WASD для медленной ходьбы, Shift для ускорения, Space для прыжка.</span>
+          <span>WASD или левый джойстик для движения, Shift или Run для ускорения, Space или Jump для прыжка.</span>
         </div>
         <div class="card">
           <strong>Осмотр</strong>
-          <span>Двигайте мышью после входа в игру.</span>
+          <span>Мышь на ПК или свайп справа на телефоне для обзора.</span>
         </div>
         <div class="card">
           <strong>Снаряжение</strong>
-          <span>F включает фонарик, E поднимает страницы, B открывает паузу.</span>
+          <span>F или Light включает фонарик, E или Use поднимает страницы, B или Pause открывает паузу.</span>
         </div>
       </div>
 
       <button id="startButton" type="button">Спуститься в подвал</button>
-      <div class="footer-note">Esc освобождает курсор. После этого можно кликнуть и вернуться в игру.</div>
+      <div class="footer-note">На телефоне тач-контролы появятся автоматически. На ПК `Esc` освобождает курсор.</div>
+      <div class="footer-note touch-only">На телефоне: левый большой круг двигает, правая зона крутит камеру, кнопки справа отвечают за Run, Jump, Use, Light и Pause.</div>
     </div>
   </div>
   <div class="overlay hidden" id="pauseOverlay">
@@ -525,6 +892,22 @@
       <button id="restartButton" type="button">Сыграть ещё раз</button>
     </div>
   </div>
+  <div id="mobileControls" aria-hidden="true">
+    <div class="mobile-look-zone" id="lookZone">
+      <div class="mobile-look-hint">Свайп справа для обзора</div>
+    </div>
+    <div class="mobile-joystick" id="moveJoystick">
+      <div class="mobile-joystick-ring"></div>
+      <div class="mobile-joystick-thumb" id="moveThumb"></div>
+    </div>
+    <div class="mobile-buttons">
+      <button class="touch-button" id="mobileUseButton" type="button">Use</button>
+      <button class="touch-button" id="mobileJumpButton" type="button">Jump</button>
+      <button class="touch-button" id="mobileLightButton" type="button">Light</button>
+      <button class="touch-button" id="mobileRunButton" type="button">Run</button>
+      <button class="touch-button wide" id="mobilePauseButton" type="button">Pause</button>
+    </div>
+  </div>
   <script type="module">
     import * as THREE from "three";
     import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
@@ -548,6 +931,15 @@
     const restartButton = document.getElementById("restartButton");
     const sensitivityRange = document.getElementById("sensitivityRange");
     const sensitivityValue = document.getElementById("sensitivityValue");
+    const mobileControlsEl = document.getElementById("mobileControls");
+    const lookZoneEl = document.getElementById("lookZone");
+    const moveJoystickEl = document.getElementById("moveJoystick");
+    const moveThumbEl = document.getElementById("moveThumb");
+    const mobileUseButton = document.getElementById("mobileUseButton");
+    const mobileJumpButton = document.getElementById("mobileJumpButton");
+    const mobileLightButton = document.getElementById("mobileLightButton");
+    const mobileRunButton = document.getElementById("mobileRunButton");
+    const mobilePauseButton = document.getElementById("mobilePauseButton");
 
     const MAZE_WIDTH = 11;
     const MAZE_HEIGHT = 11;
@@ -559,6 +951,9 @@
     const FLOOR_Y = 0;
     const CEILING_Y = WALL_HEIGHT;
     const MAX_PIXEL_RATIO = 1.35;
+    const LOOK_PITCH_LIMIT = Math.PI / 2 - 0.12;
+    const TOUCH_LOOK_SPEED_X = 0.0024;
+    const TOUCH_LOOK_SPEED_Y = 0.002;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#020508");
@@ -665,6 +1060,8 @@
       flashlightBase: 13.2,
       flashlightEnabled: true,
       lookSensitivity: 0.9,
+      lookYaw: 0,
+      lookPitch: 0,
       monsterDistance: Infinity,
       footstepPhase: 0,
       lastFootstepBeat: -1,
@@ -682,6 +1079,19 @@
       sprint: false,
     };
 
+    const deviceMode = {
+      touch: false,
+    };
+
+    const touchInput = {
+      movePointerId: null,
+      lookPointerId: null,
+      moveVector: new THREE.Vector2(),
+      lookLastX: 0,
+      lookLastY: 0,
+      sprintHeld: false,
+    };
+
     const WALK_SPEED = 2.6;
     const SPRINT_SPEED = 4.5;
     const JUMP_VELOCITY = 5.4;
@@ -695,6 +1105,116 @@
     };
 
     const audio = createAudioSystem();
+
+    function mediaMatches(query) {
+      return typeof window.matchMedia === "function" && window.matchMedia(query).matches;
+    }
+
+    function detectTouchMode() {
+      const userAgent = navigator.userAgent || "";
+      const userAgentDataMobile = typeof navigator.userAgentData?.mobile === "boolean"
+        ? navigator.userAgentData.mobile
+        : false;
+      const touchCapable = "ontouchstart" in window || navigator.maxTouchPoints > 0 || (navigator.msMaxTouchPoints || 0) > 0;
+      const coarsePointer = mediaMatches("(pointer: coarse)") || mediaMatches("(any-pointer: coarse)");
+      const hoverlessPointer = mediaMatches("(hover: none)") || mediaMatches("(any-hover: none)");
+      const mobileAgent = userAgentDataMobile || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(userAgent);
+      const narrowViewport = Math.min(window.innerWidth, window.innerHeight) <= 900;
+
+      return mobileAgent || (touchCapable && (coarsePointer || hoverlessPointer)) || (narrowViewport && touchCapable && coarsePointer);
+    }
+
+    function isTouchMode() {
+      return deviceMode.touch;
+    }
+
+    function hasGameplayControl() {
+      return state.started && !state.paused && !state.ended && (isTouchMode() || controls.isLocked);
+    }
+
+    function syncLookStateFromCamera() {
+      camera.rotation.order = "YXZ";
+      state.lookYaw = camera.rotation.y;
+      state.lookPitch = camera.rotation.x;
+    }
+
+    function applyTouchLook() {
+      camera.rotation.order = "YXZ";
+      state.lookPitch = THREE.MathUtils.clamp(state.lookPitch, -LOOK_PITCH_LIMIT, LOOK_PITCH_LIMIT);
+      camera.rotation.x = state.lookPitch;
+      camera.rotation.y = state.lookYaw;
+      camera.rotation.z = 0;
+    }
+
+    function updateMobileButtons() {
+      mobileLightButton.classList.toggle("active", state.flashlightEnabled);
+      mobileRunButton.classList.toggle("active", touchInput.sprintHeld);
+    }
+
+    function resetTouchInput() {
+      if (touchInput.movePointerId !== null && moveJoystickEl.hasPointerCapture(touchInput.movePointerId)) {
+        moveJoystickEl.releasePointerCapture(touchInput.movePointerId);
+      }
+      if (touchInput.lookPointerId !== null && lookZoneEl.hasPointerCapture(touchInput.lookPointerId)) {
+        lookZoneEl.releasePointerCapture(touchInput.lookPointerId);
+      }
+      touchInput.movePointerId = null;
+      touchInput.lookPointerId = null;
+      touchInput.moveVector.set(0, 0);
+      touchInput.sprintHeld = false;
+      moveThumbEl.style.transform = "translate(-50%, -50%)";
+      updateMobileButtons();
+    }
+
+    function applyDeviceMode(force = false) {
+      const nextTouch = detectTouchMode();
+      if (!force && nextTouch === deviceMode.touch) {
+        return;
+      }
+
+      deviceMode.touch = nextTouch;
+      document.body.classList.toggle("touch-mode", nextTouch);
+      mobileControlsEl.setAttribute("aria-hidden", String(!nextTouch));
+      resetTouchInput();
+
+      if (nextTouch && controls.isLocked) {
+        controls.unlock();
+      }
+    }
+
+    function beginGameplaySession() {
+      introOverlay.classList.add("hidden");
+      pauseOverlay.classList.add("hidden");
+      ensureAudio();
+      setAudioActive(true);
+      updateMobileButtons();
+
+      if (isTouchMode()) {
+        state.paused = false;
+        syncLookStateFromCamera();
+        applyTouchLook();
+      } else {
+        controls.lock();
+      }
+    }
+
+    function performJump() {
+      if (!state.isGrounded || !hasGameplayControl()) {
+        return;
+      }
+
+      state.isGrounded = false;
+      state.verticalVelocity = JUMP_VELOCITY;
+    }
+
+    function toggleFlashlight() {
+      if (!state.started || state.ended) {
+        return;
+      }
+
+      state.flashlightEnabled = !state.flashlightEnabled;
+      updateMobileButtons();
+    }
 
     function resetGame() {
       state.started = false;
@@ -710,6 +1230,8 @@
       state.whisperTimeout = 0;
       state.scareLevel = 0;
       state.flashlightEnabled = true;
+      state.lookYaw = 0;
+      state.lookPitch = 0;
       state.monsterDistance = Infinity;
       state.footstepPhase = 0;
       state.lastFootstepBeat = -1;
@@ -721,10 +1243,12 @@
       input.left = false;
       input.right = false;
       input.sprint = false;
+      resetTouchInput();
 
       const spawnPos = cellToWorld(spawnCell.x, spawnCell.y);
       camera.position.set(spawnPos.x, PLAYER_HEIGHT, spawnPos.z);
       camera.rotation.set(0, 0, 0);
+      syncLookStateFromCamera();
 
       noteCells = pickNoteCells(maze, spawnCell, exitCell, NOTE_TARGET);
       notes.forEach((note) => {
@@ -760,6 +1284,7 @@
       updateStartButton();
       updateHud(true);
       setAudioActive(false);
+      updateMobileButtons();
     }
 
     function updateStartButton() {
@@ -775,19 +1300,13 @@
     function startGame() {
       resetGame();
       state.started = true;
-      introOverlay.classList.add("hidden");
       updateStartButton();
-      ensureAudio();
-      setAudioActive(true);
-      controls.lock();
+      beginGameplaySession();
     }
 
     function resumeFromIntro() {
-      introOverlay.classList.add("hidden");
       updateStartButton();
-      ensureAudio();
-      setAudioActive(true);
-      controls.lock();
+      beginGameplaySession();
     }
 
     function openPauseMenu() {
@@ -800,7 +1319,8 @@
       introOverlay.classList.add("hidden");
       pauseOverlay.classList.remove("hidden");
       setAudioActive(false);
-      if (controls.isLocked) {
+      resetTouchInput();
+      if (!isTouchMode() && controls.isLocked) {
         controls.unlock();
       }
     }
@@ -813,7 +1333,11 @@
         setAudioActive(true);
       }
       if (restoreLock && state.started && !state.ended) {
-        controls.lock();
+        if (isTouchMode()) {
+          state.paused = false;
+        } else {
+          controls.lock();
+        }
       }
     }
 
@@ -833,7 +1357,10 @@
       state.ended = true;
       state.paused = true;
       state.pauseMenuOpen = false;
-      controls.unlock();
+      resetTouchInput();
+      if (!isTouchMode()) {
+        controls.unlock();
+      }
       introOverlay.classList.add("hidden");
       pauseOverlay.classList.add("hidden");
       endOverlay.classList.remove("hidden");
@@ -994,7 +1521,7 @@
     }
 
     function tryInteract() {
-      if (!state.interactable || state.ended) {
+      if (!state.interactable || state.ended || state.paused) {
         return;
       }
 
@@ -1008,7 +1535,7 @@
     }
 
     function updateInteractable() {
-      if (!controls.isLocked || state.ended) {
+      if (!hasGameplayControl()) {
         state.interactable = null;
         setPrompt("");
         return;
@@ -1039,11 +1566,11 @@
       if (!nearest) {
         setPrompt("");
       } else if (nearest.type === "note") {
-        setPrompt("Нажмите E, чтобы поднять страницу.");
+        setPrompt(isTouchMode() ? "Нажмите Use, чтобы поднять страницу." : "Нажмите E, чтобы поднять страницу.");
       } else if (exitGate.locked) {
         setPrompt("Дверь всё ещё запечатана.");
       } else {
-        setPrompt("Нажмите E, чтобы сбежать.");
+        setPrompt(isTouchMode() ? "Нажмите Use, чтобы сбежать." : "Нажмите E, чтобы сбежать.");
       }
     }
 
@@ -1570,7 +2097,7 @@
     }
 
     function updatePlayer(dt) {
-      if (!controls.isLocked || state.ended) {
+      if (!hasGameplayControl()) {
         return;
       }
 
@@ -1583,24 +2110,35 @@
       right.y = 0;
       right.normalize();
 
-      if (input.forward) {
+      const touchMoveX = isTouchMode() ? touchInput.moveVector.x : 0;
+      const touchMoveY = isTouchMode() ? -touchInput.moveVector.y : 0;
+      const moveForward = (input.forward ? 1 : 0) + Math.max(0, touchMoveY);
+      const moveBackward = (input.backward ? 1 : 0) + Math.max(0, -touchMoveY);
+      const moveRight = (input.right ? 1 : 0) + Math.max(0, touchMoveX);
+      const moveLeft = (input.left ? 1 : 0) + Math.max(0, -touchMoveX);
+
+      if (moveForward > 0) {
         moveDirection.add(forward);
       }
-      if (input.backward) {
+      if (moveBackward > 0) {
         moveDirection.sub(forward);
       }
-      if (input.right) {
+      if (moveRight > 0) {
         moveDirection.add(right);
       }
-      if (input.left) {
+      if (moveLeft > 0) {
         moveDirection.sub(right);
       }
 
       const isMoving = moveDirection.lengthSq() > 0;
       if (isMoving) {
         moveDirection.normalize();
-        const speed = input.sprint ? SPRINT_SPEED : WALK_SPEED;
-        const step = speed * dt;
+        const analogMagnitude = isTouchMode()
+          ? THREE.MathUtils.clamp(Math.hypot(touchMoveX, touchMoveY), 0, 1)
+          : 1;
+        const sprinting = input.sprint || touchInput.sprintHeld;
+        const speed = sprinting ? SPRINT_SPEED : WALK_SPEED;
+        const step = speed * dt * Math.max(analogMagnitude, 0.45);
         const nextX = camera.position.x + moveDirection.x * step;
         const nextZ = camera.position.z + moveDirection.z * step;
 
@@ -1611,12 +2149,12 @@
           camera.position.z = nextZ;
         }
 
-        state.footstepPhase += dt * (input.sprint ? 11.8 : 10);
+        state.footstepPhase += dt * (sprinting ? 11.8 : 10);
         if (state.isGrounded) {
           const footstepBeat = Math.floor(state.footstepPhase / Math.PI);
           if (footstepBeat !== state.lastFootstepBeat) {
             state.lastFootstepBeat = footstepBeat;
-            playFootstepSound(input.sprint ? 0.03 : 0.022);
+            playFootstepSound(sprinting ? 0.03 : 0.022);
           }
         }
       }
@@ -1711,14 +2249,13 @@
           input.sprint = pressed;
           break;
         case "Space":
-          if (pressed && !event.repeat && state.isGrounded && controls.isLocked && !state.ended) {
-            state.isGrounded = false;
-            state.verticalVelocity = JUMP_VELOCITY;
+          if (pressed && !event.repeat) {
+            performJump();
           }
           break;
         case "KeyF":
           if (pressed && !event.repeat && state.started && !state.ended) {
-            state.flashlightEnabled = !state.flashlightEnabled;
+            toggleFlashlight();
           }
           break;
         case "KeyB":
@@ -1736,17 +2273,27 @@
       }
     }
 
-    window.addEventListener("keydown", (event) => handleKey(event, true));
-    window.addEventListener("keyup", (event) => handleKey(event, false));
-    window.addEventListener("resize", () => {
+    function handleViewportResize() {
+      applyDeviceMode();
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
+    }
+
+    window.addEventListener("keydown", (event) => handleKey(event, true));
+    window.addEventListener("keyup", (event) => handleKey(event, false));
+    window.addEventListener("resize", handleViewportResize);
+    window.addEventListener("orientationchange", () => {
+      window.setTimeout(handleViewportResize, 60);
     });
 
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", handleViewportResize);
+    }
+
     renderer.domElement.addEventListener("click", () => {
-      if (state.started && !state.ended && !controls.isLocked && !state.pauseMenuOpen) {
+      if (!isTouchMode() && state.started && !state.ended && !controls.isLocked && !state.pauseMenuOpen) {
         controls.lock();
       }
     });
@@ -1785,9 +2332,146 @@
       applyLookSensitivity();
     });
 
+    lookZoneEl.addEventListener("pointerdown", handleLookPointerDown);
+    lookZoneEl.addEventListener("pointermove", handleLookPointerMove);
+    lookZoneEl.addEventListener("pointerup", handleLookPointerUp);
+    lookZoneEl.addEventListener("pointercancel", handleLookPointerUp);
+
+    moveJoystickEl.addEventListener("pointerdown", handleMovePointerDown);
+    moveJoystickEl.addEventListener("pointermove", handleMovePointerMove);
+    moveJoystickEl.addEventListener("pointerup", handleMovePointerUp);
+    moveJoystickEl.addEventListener("pointercancel", handleMovePointerUp);
+
+    mobileUseButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      ensureAudio();
+      tryInteract();
+    });
+    mobileJumpButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      ensureAudio();
+      performJump();
+    });
+    mobileLightButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      ensureAudio();
+      toggleFlashlight();
+    });
+    mobilePauseButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      togglePauseMenu();
+    });
+    mobileRunButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      ensureAudio();
+      touchInput.sprintHeld = true;
+      updateMobileButtons();
+    });
+    mobileRunButton.addEventListener("pointerup", (event) => {
+      event.preventDefault();
+      touchInput.sprintHeld = false;
+      updateMobileButtons();
+    });
+    mobileRunButton.addEventListener("pointercancel", () => {
+      touchInput.sprintHeld = false;
+      updateMobileButtons();
+    });
+
+    applyDeviceMode(true);
     resetGame();
     applyLookSensitivity();
     requestAnimationFrame(animate);
+
+    function handleLookPointerDown(event) {
+      if (!isTouchMode() || !state.started || state.paused || state.ended || touchInput.lookPointerId !== null) {
+        return;
+      }
+
+      ensureAudio();
+      setAudioActive(true);
+      touchInput.lookPointerId = event.pointerId;
+      touchInput.lookLastX = event.clientX;
+      touchInput.lookLastY = event.clientY;
+      lookZoneEl.setPointerCapture(event.pointerId);
+    }
+
+    function handleLookPointerMove(event) {
+      if (event.pointerId !== touchInput.lookPointerId || !hasGameplayControl()) {
+        return;
+      }
+
+      const dx = event.clientX - touchInput.lookLastX;
+      const dy = event.clientY - touchInput.lookLastY;
+      touchInput.lookLastX = event.clientX;
+      touchInput.lookLastY = event.clientY;
+
+      state.lookYaw -= dx * TOUCH_LOOK_SPEED_X * state.lookSensitivity;
+      state.lookPitch -= dy * TOUCH_LOOK_SPEED_Y * state.lookSensitivity;
+      applyTouchLook();
+    }
+
+    function handleLookPointerUp(event) {
+      if (event.pointerId !== touchInput.lookPointerId) {
+        return;
+      }
+
+      if (lookZoneEl.hasPointerCapture(event.pointerId)) {
+        lookZoneEl.releasePointerCapture(event.pointerId);
+      }
+      touchInput.lookPointerId = null;
+    }
+
+    function updateMoveJoystick(clientX, clientY) {
+      const rect = moveJoystickEl.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const radius = rect.width * 0.28;
+
+      let dx = clientX - centerX;
+      let dy = clientY - centerY;
+      const distance = Math.hypot(dx, dy);
+
+      if (distance > radius) {
+        dx = dx / distance * radius;
+        dy = dy / distance * radius;
+      }
+
+      touchInput.moveVector.set(dx / radius, dy / radius);
+      moveThumbEl.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    }
+
+    function handleMovePointerDown(event) {
+      if (!isTouchMode() || !state.started || state.paused || state.ended || touchInput.movePointerId !== null) {
+        return;
+      }
+
+      ensureAudio();
+      setAudioActive(true);
+      touchInput.movePointerId = event.pointerId;
+      moveJoystickEl.setPointerCapture(event.pointerId);
+      updateMoveJoystick(event.clientX, event.clientY);
+    }
+
+    function handleMovePointerMove(event) {
+      if (event.pointerId !== touchInput.movePointerId || !hasGameplayControl()) {
+        return;
+      }
+
+      updateMoveJoystick(event.clientX, event.clientY);
+    }
+
+    function handleMovePointerUp(event) {
+      if (event.pointerId !== touchInput.movePointerId) {
+        return;
+      }
+
+      if (moveJoystickEl.hasPointerCapture(event.pointerId)) {
+        moveJoystickEl.releasePointerCapture(event.pointerId);
+      }
+      touchInput.movePointerId = null;
+      touchInput.moveVector.set(0, 0);
+      moveThumbEl.style.transform = "translate(-50%, -50%)";
+    }
 
     function createAudioSystem() {
       return {
