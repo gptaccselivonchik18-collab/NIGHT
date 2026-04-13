@@ -978,15 +978,15 @@
     overhead.position.set(-18, 28, 12);
     scene.add(overhead);
 
-    const flashlight = new THREE.SpotLight(0xe8fff1, 13.2, 44, Math.PI / 7.2, 0.12, 1.55);
+    const flashlight = new THREE.SpotLight(0xe8fff1, 22.4, 60, Math.PI / 5.9, 0.07, 1.38);
     flashlight.castShadow = true;
     flashlight.shadow.mapSize.set(768, 768);
     flashlight.shadow.camera.near = 0.5;
-    flashlight.shadow.camera.far = 42;
+    flashlight.shadow.camera.far = 58;
     flashlight.shadow.focus = 1;
     flashlight.shadow.bias = -0.00016;
     flashlight.position.set(0, 0, 0);
-    flashlight.target.position.set(0, -0.12, -10);
+    flashlight.target.position.set(0, -0.1, -14);
     camera.add(flashlight);
     camera.add(flashlight.target);
 
@@ -1057,7 +1057,7 @@
       nextWhisper: 4,
       whisperTimeout: 0,
       scareLevel: 0,
-      flashlightBase: 13.2,
+      flashlightBase: 22.4,
       flashlightEnabled: true,
       lookSensitivity: 0.9,
       lookYaw: 0,
@@ -2065,10 +2065,10 @@
       const flicker = fearFactor > 0.08
         ? 0.98 + Math.sin(time * 0.032) * 0.025 + Math.sin(time * 0.085) * 0.018
         : 1;
-      flashlight.intensity = state.flashlightBase * (1 - fearFactor * 0.18) * flicker;
-      flashlight.angle = THREE.MathUtils.lerp(Math.PI / 7.4, Math.PI / 6.6, fearFactor);
-      flashlight.penumbra = 0.08 + fearFactor * 0.08;
-      flashlight.decay = 1.55 + fearFactor * 0.08;
+      flashlight.intensity = state.flashlightBase * (1 - fearFactor * 0.12) * flicker;
+      flashlight.angle = THREE.MathUtils.lerp(Math.PI / 6.1, Math.PI / 5.45, fearFactor);
+      flashlight.penumbra = 0.06 + fearFactor * 0.05;
+      flashlight.decay = 1.38 + fearFactor * 0.06;
       glitchEl.style.opacity = `${Math.max(0, state.scareLevel * 0.5 + fearFactor * 0.22)}`;
     }
 
